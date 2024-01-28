@@ -214,14 +214,14 @@ const DeviceCommandsPage = () => {
               expandable={{
                 expandedRowRender: (record) => (
                   <Grid item xs={12}>
-                    <Stack direction="row" spacing={4}>
+                    {/* <Stack direction="row" spacing={4}>
                       <Typography xs={3}>HEX</Typography>
                       <Typography variant="body2" gutterBottom>
                         : {record.hex}
                       </Typography>
-                    </Stack>
+                    </Stack> */}
                     <Stack direction="row" spacing={4}>
-                      <Typography xs={3}>ASCII</Typography>
+                      <Typography xs={3}>{t("deviceResponse")}</Typography>
                       <Typography>: {record.ascii}</Typography>
                     </Stack>
                   </Grid>

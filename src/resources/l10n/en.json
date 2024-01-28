@@ -616,5 +616,6 @@
   "gpsType": "GPS Type ",
   "simcardNumber": "Simcard Number",
   "forwardDestinationServer": "Add Destination Server",
-  "supportedDevice": "Supported Device"
+  "supportedDevice": "Supported Device",
+  "deviceResponse": "Device Response"
 }

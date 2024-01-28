@@ -9,7 +9,7 @@ import {
   DialogContent,
   DialogActions,
 } from "@mui/material";
-import { Table, Space } from "antd";
+import { Table, Space, Grid, Typography } from "antd";
 import CommuteIcon from "@mui/icons-material/Commute";
 
 import { useEffectAsync } from "../reactHelper";
@@ -32,10 +32,6 @@ const DeviceSupportedsPage = () => {
   const [searchKeyword, setSearchKeyword] = useState("");
   const administrator = useAdministrator();
   const [open, setOpen] = useState(false);
-
-  const showModal = () => {
-    setOpen(true);
-  };
 
   const columns = [
     {
@@ -154,6 +150,41 @@ const DeviceSupportedsPage = () => {
         }
       >
         <Stack spacing={1}>
+          <Typography variant="h3" component="h4">
+            MULTITRACKING.NET SERVER IP
+          </Typography>
+          <Typography variant="h5" component="h6">
+            Domain Format : id.multitracking.net
+          </Typography>
+          <Typography variant="h5" component="h6">
+            IP Format : 202.83.121.196
+          </Typography>
+          <Typography></Typography>
+          {/* <Stack spacing={1}>
+            <Grid item xs={12}>
+              <Stack
+                direction="row"
+                // justifyContent="space-between"
+                alignItems="center"
+                spacing={0}
+              >
+                <Grid xs={1}>Name</Grid>
+                <Grid>: </Grid>
+              </Stack>
+            </Grid>
+            <Grid item xs={12}>
+              <Stack
+                direction="row"
+                // justifyContent="space-between"
+                // alignItems="center"
+                spacing={0}
+              >
+                <Grid xs={1}>Imei</Grid>
+                <Grid>: </Grid>
+              </Stack>
+            </Grid>
+          </Stack> */}
+
           <SearchField
             xs={6}
             keyword={searchKeyword}

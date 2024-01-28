@@ -1,6 +1,6 @@
 {
   "name": "System APP",
-  "short_name": "TRACCAR",
+  "short_name": "MULTITRACKING.NET",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",

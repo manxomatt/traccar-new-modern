@@ -182,7 +182,7 @@ const DevicesPage = () => {
 
   const devicesState = useSelector((state) => state.devices.items);
   const devices = Object.values(devicesState);
-  console.log(devices);
+
   return (
     <React.Fragment>
       <MainCard

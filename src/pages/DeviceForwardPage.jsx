@@ -180,14 +180,6 @@ const DeviceForwardPage = () => {
                             onChange={handleChange}
                             placeholder="0000"
                           />
-                          {/* {touched.password && errors.password && (
-                            <FormHelperText
-                              error
-                              id="standard-weight-helper-text-password-login"
-                            >
-                              {errors.password}
-                            </FormHelperText>
-                          )} */}
                         </Stack>
                       </Grid>
 
