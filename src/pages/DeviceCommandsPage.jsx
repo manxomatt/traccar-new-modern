@@ -28,6 +28,7 @@ import AnimateButton from "../common/components/mantis/@extended/AnimateButton";
 import { Table, Space } from "antd";
 import moment from "moment/moment";
 import { formatTime } from "../common/util/formatter";
+import SendIcon from "@mui/icons-material/Send";
 
 const DeviceCommandsPage = () => {
   const { id } = useParams();
@@ -44,6 +45,48 @@ const DeviceCommandsPage = () => {
   const commandsState = useSelector((state) => state.commands.items);
 
   const commands = Object.values(commandsState);
+
+  const actionResend = {
+    key: "command",
+    title: t("sendCommandDevice"),
+    icon: <SendIcon fontSize="small" />,
+    handler: async (commandId) => {
+      setLoading(true);
+
+      try {
+        const commandDesponse = await fetch(
+          `/api/v1/devices/command/resend/${commandId}`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({}),
+          }
+        );
+
+        if (commandDesponse.ok) {
+          const response = await fetch(
+            `/api/v1/devices/` +
+              id +
+              `/command?${qs.stringify(getParams(tableParams))}`
+          );
+          if (response.ok) {
+            const objResponse = await response.json();
+            dispatch(commandsActions.refresh(objResponse.results));
+            setTableParams({
+              ...tableParams,
+              pagination: {
+                ...tableParams.pagination,
+                total: objResponse.info.totalCount,
+              },
+            });
+          }
+        }
+      } finally {
+        setLoading(false);
+      }
+      // alert(commandId);
+    },
+  };
 
   const columns = [
     {
@@ -89,6 +132,7 @@ const DeviceCommandsPage = () => {
             itemId={record.id}
             endpoint={"devices/" + id + "/command"}
             setTimestamp={setTimestamp}
+            customActions={[actionResend]}
           />
         </Space>
       ),
