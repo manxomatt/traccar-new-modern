@@ -17,7 +17,7 @@ const DrawerHeader = ({ open }) => {
     // only available in paid version
     <DrawerHeaderStyled theme={theme} open={open}>
       <Stack direction="row" spacing={1} alignItems="center">
-        <Typography>MULTITRACKING.NET</Typography>
+        {/* <Typography>MULTITRACKING.NET</Typography> */}
         {/* <Logo /> */}
         {/* <Chip
           label={import.meta.env.VITE_APP_VERSION} //{process.env.VITE_APP_VERSION} //

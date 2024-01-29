@@ -26,7 +26,7 @@ const AuthWrapper = ({ children }) => (
     >
       <Grid item xs={12} sx={{ ml: 3, mt: 3 }}>
         {/* <Logo /> */}
-        <Typography>MULTITRACKING.NET</Typography>
+        {/* <Typography>MULTITRACKING.NET</Typography> */}
       </Grid>
       <Grid item xs={12}>
         <Grid
@@ -36,46 +36,67 @@ const AuthWrapper = ({ children }) => (
           justifyContent="center"
           alignItems="center"
         >
-          <Grid item xs={6} spacing={2} paddingTop={"80px"}>
+          <Grid item xs={11} md={6} spacing={2} paddingTop={"10px"}>
             <center>
               <Typography variant="h4">MULTITRACKING.NET</Typography>
             </center>{" "}
-            <Typography variant="h6" paddingTop={"20px"}>
+            <Typography variant="h6" paddingTop={"10px"}>
               Multitracking.net memberikan layanan berupa fitur untuk tracking
               kendaraan ke beberapa aplikasi server sekaligus dalam waktu yang
-              bersamaan. Sebagai contoh, misalnya anda menggunakan GPS Tracker
-              Concox GT06N, maka anda bisa tracking GPS Tracker tersebut di{" "}
+              bersamaan.
+            </Typography>
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            container
+            justifyContent="center"
+            paddingTop={"20px"}
+            // border={"1px solid blue"}
+            sx={{
+              minHeight: {
+                xs: "calc(100vh - 600px)",
+                md: "calc(100vh - 540px)",
+              },
+            }}
+          >
+            <Grid item>
+              <AuthCard>{children}</AuthCard>
+            </Grid>
+          </Grid>
+          <Grid item xs={11} md={6} spacing={2}>
+            <Typography>
+              Sebagai contoh, misalnya anda menggunakan GPS Tracker Concox
+              GT06N, maka anda bisa tracking GPS Tracker tersebut di &nbsp;
               <b>
                 Server Tracksolid, GSI, IDTrack, dan atau server lain secara
                 bersamaan.
               </b>
-              <b>KEUNTUNGAN MENGGUNAKAN LAYANAN MULTITRACKING.NET:</b>- Jika ada
-              salah satu server mengalami gangguan, anda tetap bisa tracking
-              kendaraan menggunakan server lainnya, tanpa merubah settingan
-              apapun di GPS Tracker. - Jika kendaraan yang dilacak merupakan
-              kendaraan milik Group, anda dan rekan anda bisa memilih menggunaan
-              aplikasi server favorit masing-masing pengguna. - Jika anda
-              menggunakan server GPS Tracker yang boros pulsa data, maka anda
-              bisa menghemat biaya pulsa data melalui layanan Multitracking.net,
-              dikarenakan Multitracking.net hanya membutuhkan sekitar 25 - 50
-              MB/bulan untuk GPS Tracker standar. Tunggu apalagi, silahkan
-              mendaftar layanan Multitracking.net secara gratis!
+              <br />
+              <br />
+              <b>KEUNTUNGAN MENGGUNAKAN LAYANAN MULTITRACKING.NET:</b>
+              <ul>
+                <li>
+                  {" "}
+                  Jika ada salah satu server mengalami gangguan, anda tetap bisa
+                  tracking kendaraan menggunakan server lainnya, tanpa merubah
+                  settingan apapun di GPS Tracker.{" "}
+                </li>
+                <li>
+                  Jika kendaraan yang dilacak merupakan kendaraan milik Group,
+                  anda dan rekan anda bisa memilih menggunaan aplikasi server
+                  favorit masing-masing pengguna.{" "}
+                </li>
+                <li>
+                  Jika anda menggunakan server GPS Tracker yang boros pulsa
+                  data, maka anda bisa menghemat biaya pulsa data melalui
+                  layanan Multitracking.net, dikarenakan Multitracking.net hanya
+                  membutuhkan sekitar 25 - 50 MB/bulan untuk GPS Tracker
+                  standar. Tunggu apalagi, silahkan mendaftar layanan
+                  Multitracking.net secara gratis!
+                </li>
+              </ul>
             </Typography>
-          </Grid>
-        </Grid>
-
-        <Grid
-          item
-          xs={12}
-          container
-          justifyContent="center"
-          paddingTop={"20px"}
-          sx={{
-            minHeight: { xs: "calc(100vh - 134px)", md: "calc(100vh - 112px)" },
-          }}
-        >
-          <Grid item>
-            <AuthCard>{children}</AuthCard>
           </Grid>
         </Grid>
       </Grid>

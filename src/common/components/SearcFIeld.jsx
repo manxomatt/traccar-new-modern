@@ -30,7 +30,7 @@ const SearchField = ({ keyword, setKeyword, setTimestamp }) => {
           placeholder={t("sharedSearch")}
           value={keyword}
           onChange={(e) => {
-            if (e.target.value.length == 0 || e.target.value.length > 4) {
+            if (e.target.value.length == 0 || e.target.value.length > 2) {
               setTimestamp(Date.now());
             }
 
