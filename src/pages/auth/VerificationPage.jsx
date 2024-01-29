@@ -72,8 +72,6 @@ const VerificationPage = () => {
               setShowLoader(true);
               setFailed(false);
               try {
-                // const query = `email=${encodeURIComponent(values.email)}`;
-
                 const response = await fetch("/api/users/code/request", {
                   method: "POST",
                   headers: { "Content-Type": "application/json" },

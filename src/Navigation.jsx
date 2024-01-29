@@ -34,7 +34,7 @@ import CommandPage from "./settings/CommandPage";
 import StatisticsPage from "./reports/StatisticsPage";
 import LoginPage from "./login/LoginPage";
 import RegisterPage from "./login/RegisterPage";
-import ResetPasswordPage from "./login/ResetPasswordPage";
+import ResetPasswordPage from "./pages/ResetPasswordPage";
 import GeofencesPage from "./other/GeofencesPage";
 import GeofencePage from "./settings/GeofencePage";
 import useQuery from "./common/util/useQuery";

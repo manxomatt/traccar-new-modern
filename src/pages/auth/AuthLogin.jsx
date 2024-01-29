@@ -275,7 +275,7 @@ const AuthLogin = () => {
                   <Link
                     variant="h6"
                     component={RouterLink}
-                    to=""
+                    to="/reset-password"
                     color="text.primary"
                   >
                     Forgot Password?
