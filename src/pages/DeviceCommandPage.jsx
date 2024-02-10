@@ -1,60 +1,15 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
-import dayjs from "dayjs";
 
-import {
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  Button,
-  Checkbox,
-  Divider,
-  FormControlLabel,
-  FormHelperText,
-  Grid,
-  Link,
-  IconButton,
-  InputAdornment,
-  InputLabel,
-  OutlinedInput,
-  Stack,
-  Typography,
-  TextField,
-} from "@mui/material";
-import makeStyles from "@mui/styles/makeStyles";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { DropzoneArea } from "react-mui-dropzone";
-import EditItemView from "../settings/components/EditItemView";
-import EditAttributesAccordion from "../settings/components/EditAttributesAccordion";
+import { Button, Grid, InputLabel, OutlinedInput, Stack } from "@mui/material";
+
 import SelectField from "../common/components/SelectField";
 import { prefixString } from "../common/util/stringUtils";
-import deviceCategories from "../common/util/deviceCategories";
 import { useEffectAsync } from "../reactHelper";
 import { useTranslation } from "../common/components/LocalizationProvider";
-import useDeviceAttributes from "../common/attributes/useDeviceAttributes";
-import { useAdministrator } from "../common/util/permissions";
-import SettingsMenu from "../settings/components/SettingsMenu";
-import useCommonDeviceAttributes from "../common/attributes/useCommonDeviceAttributes";
-import { useCatch } from "../reactHelper";
-import CollectionFab from "../settings/components/CollectionFab";
-import SearchHeader, {
-  filterByKeyword,
-} from "../settings/components/SearchHeader";
-import PageLayout from "../common/components/PageLayout";
-import CollectionActions from "../settings/components/CollectionActions";
-import TableShimmer from "../common/components/TableShimmer";
-import {
-  Table,
-  TableRow,
-  TableCell,
-  TableHead,
-  TableBody,
-} from "@mui/material";
 
-import useSettingsStyles from "../settings/common/useSettingsStyles";
 import { useNavigate } from "react-router-dom";
 import MainCard from "../common/components/mantis/MainCard";
-import * as Yup from "yup";
 import { Formik } from "formik";
 import AnimateButton from "../common/components/mantis/@extended/AnimateButton";
 
@@ -66,10 +21,6 @@ const DeviceCommandPage = () => {
   const { id } = useParams();
   let url = "/api/v1/devices/" + id + "/command";
   let method = "POST";
-  // if (fid !== undefined) {
-  //   url = "/api/devices/" + id + "/command/" + fid;
-  //   method = "PUT";
-  // }
 
   const [timestamp, setTimestamp] = useState(Date.now());
   const [forward, setForward] = useState([]);
@@ -136,7 +87,7 @@ const DeviceCommandPage = () => {
                 enableReinitialize={true}
                 initialValues={{
                   name: commandAttr.name,
-                  type: commandAttr.type,
+                  type: "custom",
                   command: commandAttr.command,
                 }}
                 // validationSchema={Yup.object().shape({
@@ -187,7 +138,7 @@ const DeviceCommandPage = () => {
                           />
                         </Stack>
                       </Grid>
-                      <Grid item xs={12}>
+                      {/* <Grid item xs={12}>
                         <Stack spacing={1}>
                           <InputLabel htmlFor="command-type">
                             {t("commandType")}
@@ -222,7 +173,7 @@ const DeviceCommandPage = () => {
                             }
                           />
                         </Stack>
-                      </Grid>
+                      </Grid> */}
                       <Grid item xs={12}>
                         <Stack spacing={1}>
                           <InputLabel htmlFor="command-device">

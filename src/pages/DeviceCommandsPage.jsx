@@ -1,34 +1,40 @@
-import React, { useState } from "react";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useParams, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffectAsync } from "../reactHelper";
 import qs from "qs";
 import {
   Grid,
   Stack,
-  // Table,
-  TableRow,
-  TableCell,
-  IconButton,
   Button,
   CircularProgress,
   Typography,
+  // Space,
 } from "@mui/material";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+
+import { Table, Space } from "antd"; //,
 import CheckIcon from "@mui/icons-material/Check";
 import CollectionActions from "../settings/components/CollectionActions";
 
 import MainCard from "../common/components/mantis/MainCard";
 import { useTranslation } from "../common/components/LocalizationProvider";
-import useSettingsStyles from "../settings/common/useSettingsStyles";
+
+// import Button from "@mui/material/Button";
+import Menu from "@mui/material/Menu";
 
 import { commandsActions } from "../store";
 import AnimateButton from "../common/components/mantis/@extended/AnimateButton";
-import { Table, Space } from "antd";
-import moment from "moment/moment";
+import { DownOutlined, UserOutlined } from "@ant-design/icons";
 import { formatTime } from "../common/util/formatter";
 import SendIcon from "@mui/icons-material/Send";
+import ClickAwayListener from "@mui/material/ClickAwayListener";
+import Grow from "@mui/material/Grow";
+import Paper from "@mui/material/Paper";
+import Popper from "@mui/material/Popper";
+import MenuItem from "@mui/material/MenuItem";
+import MenuList from "@mui/material/MenuList";
+import PopupState, { bindTrigger, bindMenu } from "material-ui-popup-state";
+import { prefixString } from "../common/util/stringUtils";
 
 const DeviceCommandsPage = () => {
   const { id } = useParams();
@@ -37,14 +43,17 @@ const DeviceCommandsPage = () => {
 
   const [device, setDevice] = useState([]);
   const [data, setData] = useState();
-  const [items, setItems] = useState([]);
+  const [btnItems, setBtnItems] = useState([]);
   const [isExpanded, setIsExpanded] = React.useState(false);
   const [timestamp, setTimestamp] = useState(Date.now());
   const [loading, setLoading] = useState(false);
   const [searchKeyword, setSearchKeyword] = useState("");
+
   const commandsState = useSelector((state) => state.commands.items);
 
   const commands = Object.values(commandsState);
+
+  const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
   const actionResend = {
     key: "command",
@@ -54,7 +63,7 @@ const DeviceCommandsPage = () => {
       setLoading(true);
 
       try {
-        const commandDesponse = await fetch(
+        const commandResponse = await fetch(
           `/api/v1/devices/command/resend/${commandId}`,
           {
             method: "POST",
@@ -63,7 +72,7 @@ const DeviceCommandsPage = () => {
           }
         );
 
-        if (commandDesponse.ok) {
+        if (commandResponse.ok) {
           const response = await fetch(
             `/api/v1/devices/` +
               id +
@@ -83,9 +92,53 @@ const DeviceCommandsPage = () => {
         }
       } finally {
         setLoading(false);
+        await delay(4000);
+        setTimestamp(Date.now());
       }
-      // alert(commandId);
     },
+  };
+
+  const actionNonCustom = async (command) => {
+    setLoading(true);
+
+    try {
+      const path = `/api/v1/devices/${id}/command`;
+
+      const body = {
+        name: t(prefixString("command", command)),
+        type: command,
+        command: "-",
+      };
+
+      const commandResponse = await fetch(path, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+
+      if (commandResponse.ok) {
+        const response = await fetch(
+          `/api/v1/devices/` +
+            id +
+            `/command?${qs.stringify(getParams(tableParams))}`
+        );
+        if (response.ok) {
+          const objResponse = await response.json();
+          dispatch(commandsActions.refresh(objResponse.results));
+          setTableParams({
+            ...tableParams,
+            pagination: {
+              ...tableParams.pagination,
+              total: objResponse.info.totalCount,
+            },
+          });
+        }
+      }
+    } finally {
+      setLoading(false);
+      await delay(4000);
+      setTimestamp(Date.now());
+    }
   };
 
   const columns = [
@@ -195,6 +248,21 @@ const DeviceCommandsPage = () => {
       setLoading(false);
     }
   }, [JSON.stringify(tableParams), timestamp]);
+
+  const keyGetter = (item) => item.id;
+  const titleGetter = (item) => item.name;
+  useEffectAsync(async () => {
+    const typeResponse = await fetch(
+      `/api/commands/types?${new URLSearchParams({
+        deviceId: id,
+      }).toString()}`
+    );
+    if (typeResponse.ok) {
+      setBtnItems(await typeResponse.json());
+    }
+    // console.log(atypeResponse.json());
+  }, []);
+
   return (
     <Grid container spacing={3}>
       <Grid item xs={12} lg={12}>
@@ -234,17 +302,50 @@ const DeviceCommandsPage = () => {
           <MainCard
             title={t("commandDevice")}
             secondary={
-              <AnimateButton>
-                <Button
-                  component={Link}
-                  to={"/device/" + id + "/command"}
-                  type="submit"
-                  variant="contained"
-                  color="primary"
-                >
-                  {t("sharedNewCommand")}
-                </Button>
-              </AnimateButton>
+              <PopupState variant="popover" popupId="command-popup-menu">
+                {(popupState) => (
+                  <React.Fragment>
+                    <Button variant="contained" {...bindTrigger(popupState)}>
+                      {t("sendCommandDevice")}
+                    </Button>
+                    <Menu {...bindMenu(popupState)}>
+                      {btnItems.map((item) => {
+                        if (item.type == "custom") {
+                          return (
+                            <MenuItem
+                              component={Link}
+                              to={"/device/" + id + "/command"}
+                              // key={keyGetter(item)}
+                              // value={keyGetter(item)}
+                            >
+                              {t(prefixString("command", item.type))}
+                            </MenuItem>
+                          );
+                        } else {
+                          return (
+                            <MenuItem
+                              onClick={() => actionNonCustom(item.type)}
+                            >
+                              {t(prefixString("command", item.type))}
+                            </MenuItem>
+                          );
+                        }
+                      })}
+                    </Menu>
+                  </React.Fragment>
+                )}
+              </PopupState>
+              // <AnimateButton>
+              //   <Button
+              //     component={Link}
+              //     to={"/device/" + id + "/command"}
+              //     type="submit"
+              //     variant="contained"
+              //     color="primary"
+              //   >
+              //     {t("sharedNewCommand")}
+              //   </Button>
+              // </AnimateButton>
             }
           >
             <Table

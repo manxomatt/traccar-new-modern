@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 
 // material-ui
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Grid, Typography, Stack } from "@mui/material";
 
 // project import
 import AuthCard from "./AuthCard";
@@ -10,6 +10,7 @@ import AuthFooter from "../../common/components/mantis/cards/AuthFooter";
 
 // assets
 import AuthBackground from "../../assets/images/auth/AuthBackground";
+import { Link } from "react-router-dom";
 
 // ==============================|| AUTHENTICATION - WRAPPER ||============================== //
 
@@ -19,7 +20,7 @@ const AuthWrapper = ({ children }) => (
     <Grid
       container
       direction="column"
-      justifyContent="flex-end"
+      justifyContent="flex-start"
       sx={{
         minHeight: "100vh",
       }}
@@ -38,13 +39,8 @@ const AuthWrapper = ({ children }) => (
         >
           <Grid item xs={11} md={6} spacing={2} paddingTop={"10px"}>
             <center>
-              <Typography variant="h4">MULTITRACKING.NET</Typography>
+              <Typography variant="h4">MULTITRACKING</Typography>
             </center>{" "}
-            <Typography variant="h6" paddingTop={"10px"}>
-              Multitracking.net memberikan layanan berupa fitur untuk tracking
-              kendaraan ke beberapa aplikasi server sekaligus dalam waktu yang
-              bersamaan.
-            </Typography>
           </Grid>
           <Grid
             item
@@ -54,49 +50,30 @@ const AuthWrapper = ({ children }) => (
             paddingTop={"20px"}
             // border={"1px solid blue"}
             sx={{
-              minHeight: {
-                xs: "calc(100vh - 600px)",
-                md: "calc(100vh - 540px)",
-              },
+              minHeight: "40vh",
+              // minHeight: {
+              //   xs: "calc(100vh - 300px)",
+              //   md: "calc(100vh - 340px)",
+              // },
             }}
           >
             <Grid item>
               <AuthCard>{children}</AuthCard>
             </Grid>
           </Grid>
-          <Grid item xs={11} md={6} spacing={2}>
-            <Typography>
-              Sebagai contoh, misalnya anda menggunakan GPS Tracker Concox
-              GT06N, maka anda bisa tracking GPS Tracker tersebut di &nbsp;
-              <b>
-                Server Tracksolid, GSI, IDTrack, dan atau server lain secara
-                bersamaan.
-              </b>
-              <br />
-              <br />
-              <b>KEUNTUNGAN MENGGUNAKAN LAYANAN MULTITRACKING.NET:</b>
-              <ul>
-                <li>
-                  {" "}
-                  Jika ada salah satu server mengalami gangguan, anda tetap bisa
-                  tracking kendaraan menggunakan server lainnya, tanpa merubah
-                  settingan apapun di GPS Tracker.{" "}
-                </li>
-                <li>
-                  Jika kendaraan yang dilacak merupakan kendaraan milik Group,
-                  anda dan rekan anda bisa memilih menggunaan aplikasi server
-                  favorit masing-masing pengguna.{" "}
-                </li>
-                <li>
-                  Jika anda menggunakan server GPS Tracker yang boros pulsa
-                  data, maka anda bisa menghemat biaya pulsa data melalui
-                  layanan Multitracking.net, dikarenakan Multitracking.net hanya
-                  membutuhkan sekitar 25 - 50 MB/bulan untuk GPS Tracker
-                  standar. Tunggu apalagi, silahkan mendaftar layanan
-                  Multitracking.net secara gratis!
-                </li>
-              </ul>
-            </Typography>
+          <Grid item xs={11} md={3} spacing={2}>
+            <Grid item xs={12}>
+              <Stack spacing={1} alignItems="center">
+                <Typography>Server Domain : id.multitracking.net</Typography>
+                <Typography>Server IP : 202.83.121.196 </Typography>
+                <Typography>Server Location : Jakarta Indonesia </Typography>
+                <Typography>
+                  <Link to={"/devices/supported"} target="_blank">
+                    Supported Device
+                  </Link>{" "}
+                </Typography>
+              </Stack>
+            </Grid>
           </Grid>
         </Grid>
       </Grid>

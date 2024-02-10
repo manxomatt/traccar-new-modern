@@ -142,6 +142,8 @@ const UserPage = () => {
     (item.id || item.password) &&
     (admin || !totpForce || item.totpKey);
 
+  const today = new Date();
+
   return (
     <EditDataView
       endpoint="users"
@@ -221,7 +223,19 @@ const UserPage = () => {
                         dayjs(item.expirationTime)
                           .locale("en")
                           .format("YYYY-MM-DD")) ||
-                      "2099-01-01"
+                      setItem({
+                        ...item,
+                        expirationTime: dayjs(
+                          today.getFullYear() +
+                            1 +
+                            "-" +
+                            ("0" + (today.getMonth() + 1)).slice(-2) +
+                            "-" +
+                            ("0" + today.getDate()).slice(-2)
+                        )
+                          .locale("en")
+                          .format("YYYY-MM-DD"),
+                      })
                     }
                     onChange={(e) =>
                       setItem({

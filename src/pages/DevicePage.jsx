@@ -46,27 +46,31 @@ const DevicePage = () => {
 
   const [item, setItem] = useState();
 
-  const handleFiles = useCatch(async (files) => {
-    if (files.length > 0) {
-      const response = await fetch(`/api/devices/${item.id}/image`, {
-        method: "POST",
-        body: files[0],
-      });
-      if (response.ok) {
-        setItem({
-          ...item,
-          attributes: {
-            ...item.attributes,
-            deviceImage: await response.text(),
-          },
-        });
-      } else {
-        throw Error(await response.text());
-      }
-    }
-  });
+  // const handleFiles = useCatch(async (files) => {
+  //   if (files.length > 0) {
+  //     const response = await fetch(`/api/devices/${item.id}/image`, {
+  //       method: "POST",
+  //       body: files[0],
+  //     });
+  //     if (response.ok) {
+  //       setItem({
+  //         ...item,
+  //         attributes: {
+  //           ...item.attributes,
+  //           deviceImage: await response.text(),
+  //         },
+  //       });
+  //     } else {
+  //       throw Error(await response.text());
+  //     }
+  //   }
+  // });
 
-  const validate = () => item && item.name && item.uniqueId;
+  const validate = () =>
+    item && item.name && item.uniqueId && item.expirationTime;
+  const today = new Date();
+
+  console.log(item);
 
   return (
     <EditDataView
@@ -167,68 +171,7 @@ const DevicePage = () => {
                 </Grid>
               </Stack>
             </Grid>
-            {/* <Grid item xs={12}>
-              <Stack direction="row" alignItems="center" spacing={0}>
-                <Grid item xs={1}>
-                  {t("deviceContact")}
-                </Grid>
-                <Grid item xs={2}>
-                  <OutlinedInput
-                    fullWidth
-                    size="small"
-                    value={item.contact || ""}
-                    onChange={(event) =>
-                      setItem({ ...item, contact: event.target.value })
-                    }
-                  />
-                </Grid>
-              </Stack>
-            </Grid> */}
-            {/* <Grid item xs={12}>
-              <Stack direction="row" alignItems="center" spacing={0}>
-                <Grid item xs={1}>
-                  {t("deviceCategory")}
-                </Grid>
-                <Grid item xs={4}>
-                  <SelectField
-                    fullWidth
-                    value={item.category || "default"}
-                    emptyValue={null}
-                    onChange={(event) =>
-                      setItem({ ...item, category: event.target.value })
-                    }
-                    data={deviceCategories.map((category) => ({
-                      id: category,
-                      name: t(
-                        `category${category.replace(/^\w/, (c) =>
-                          c.toUpperCase()
-                        )}`
-                      ),
-                    }))}
-                  />
-                </Grid>
-              </Stack>
-            </Grid> */}
-            {/* <Grid item xs={12}>
-              <Stack direction="row" alignItems="center" spacing={0}>
-                <Grid item xs={1}>
-                  {t("sharedCalendar")}
-                </Grid>
-                <Grid item xs={4}>
-                  <SelectField
-                    fullWidth
-                    value={item.calendarId || 0}
-                    onChange={(event) =>
-                      setItem({
-                        ...item,
-                        calendarId: Number(event.target.value),
-                      })
-                    }
-                    endpoint="/api/calendars"
-                  />
-                </Grid>
-              </Stack>
-            </Grid> */}
+
             <Grid item xs={12}>
               <Stack direction="row" alignItems="center" spacing={0}>
                 <Grid item xs={2}>
@@ -243,7 +186,19 @@ const DevicePage = () => {
                         dayjs(item.expirationTime)
                           .locale("en")
                           .format("YYYY-MM-DD")) ||
-                      "2099-01-01"
+                      setItem({
+                        ...item,
+                        expirationTime: dayjs(
+                          today.getFullYear() +
+                            1 +
+                            "-" +
+                            ("0" + (today.getMonth() + 1)).slice(-2) +
+                            "-" +
+                            ("0" + today.getDate()).slice(-2)
+                        )
+                          .locale("en")
+                          .format("YYYY-MM-DD"),
+                      })
                     }
                     onChange={(e) =>
                       setItem({

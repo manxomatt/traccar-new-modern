@@ -122,6 +122,7 @@ const Navigation = () => {
       <Route path="/registration-verify" element={<RegistrationVerifyPage />} />
       <Route path="/reset-password" element={<ResetPasswordPage />} />
       <Route path="/change-server" element={<ChangeServerPage />} />
+      <Route path="/devices/supported" element={<DeviceSupportedsPage />} />
 
       <Route path="/" element={<App />}>
         {/* <Route index element={<MainPage />} /> */}
@@ -136,7 +137,6 @@ const Navigation = () => {
         <Route path="device/:id/commands" element={<DeviceCommandsPage />} />
         <Route path="device/:id/command" element={<DeviceCommandPage />} />
         <Route path="devices" element={<DevicesPage />} />
-        <Route path="devices/supported" element={<DeviceSupportedsPage />} />
         <Route path="devices/supported/add" element={<DeviceSupportedPage />} />
         <Route
           path="devices/supported/edit/:id"
