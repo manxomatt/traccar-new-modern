@@ -1,5 +1,5 @@
-import React from 'react';
-import { Alert } from '@mui/material';
+import React from "react";
+import { Alert } from "@mui/material";
 
 class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -21,7 +21,9 @@ class ErrorBoundary extends React.Component {
         <Alert severity="error">
           <code
             dangerouslySetInnerHTML={{
-              __html: error.stack.replaceAll('\n', '<br>').replaceAll(' ', '&nbsp;'),
+              __html: error.stack
+                .replaceAll("\n", "<br>")
+                .replaceAll(" ", "&nbsp;"),
             }}
           />
         </Alert>

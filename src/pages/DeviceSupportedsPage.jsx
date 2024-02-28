@@ -160,30 +160,6 @@ const DeviceSupportedsPage = () => {
             IP Format : 202.83.121.196
           </Typography>
           <Typography></Typography>
-          {/* <Stack spacing={1}>
-            <Grid item xs={12}>
-              <Stack
-                direction="row"
-                // justifyContent="space-between"
-                alignItems="center"
-                spacing={0}
-              >
-                <Grid xs={1}>Name</Grid>
-                <Grid>: </Grid>
-              </Stack>
-            </Grid>
-            <Grid item xs={12}>
-              <Stack
-                direction="row"
-                // justifyContent="space-between"
-                // alignItems="center"
-                spacing={0}
-              >
-                <Grid xs={1}>Imei</Grid>
-                <Grid>: </Grid>
-              </Stack>
-            </Grid>
-          </Stack> */}
 
           <SearchField
             xs={6}
@@ -195,8 +171,9 @@ const DeviceSupportedsPage = () => {
             columns={columns}
             rowKey={(record) => record.id}
             dataSource={data}
-            pagination={tableParams.pagination}
+            pagination={false} //tableParams.pagination}
             loading={loading}
+            scroll={{ x: 2000, y: 800 }}
             onChange={handleTableChange}
           />
         </Stack>
